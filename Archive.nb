@@ -1,0 +1,98 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      3037,         90]
+NotebookOptionsPosition[      2331,         69]
+NotebookOutlinePosition[      2742,         85]
+CellTagsIndexPosition[      2699,         82]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{"dir", "=", 
+  RowBox[{"FileNameJoin", "[", 
+   RowBox[{"{", 
+    RowBox[{"$UserDocumentsDirectory", ",", "\"\<YouTilities\>\""}], "}"}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"paclet", "=", 
+   RowBox[{"CreatePacletArchive", "[", 
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{"$UserDocumentsDirectory", ",", "\"\<YouTilities\>\""}], "}"}], 
+     "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pacletName", "=", 
+   RowBox[{
+    RowBox[{"FileNameSplit", "[", "paclet", "]"}], "[", 
+    RowBox[{"[", 
+     RowBox[{"-", "1"}], "]"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.890047192641285*^9, 3.890047254484187*^9}},
+ CellLabel->"In[94]:=",ExpressionUUID->"16cc9fa5-1d40-43a6-ae99-0a8c04d01621"],
+
+Cell[BoxData["\<\"C:\\\\Users\\\\andre\\\\Documents\\\\YouTilities\"\>"], \
+"Output",
+ CellChangeTimes->{{3.890047207160942*^9, 3.890047259922163*^9}},
+ CellLabel->"Out[94]=",ExpressionUUID->"b53c2e7d-ac51-49ba-bdce-52450a0443c3"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RenameFile", "[", 
+  RowBox[{"paclet", ",", 
+   RowBox[{"FileNameJoin", "@", 
+    RowBox[{"{", 
+     RowBox[{"dir", ",", "pacletName"}], "}"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.890047107443252*^9, 3.8900471108830495`*^9}, {
+  3.8900471773264027`*^9, 3.890047181143214*^9}, {3.890047256041338*^9, 
+  3.8900472889498796`*^9}},
+ CellLabel->"In[98]:=",ExpressionUUID->"033cfa9f-1f36-4ed3-8f26-7d89915e8117"],
+
+Cell[BoxData["\<\"C:\\\\Users\\\\andre\\\\Documents\\\\YouTilities\\\\\
+YouTilities-0.1.0.paclet\"\>"], "Output",
+ CellChangeTimes->{3.8900472897619305`*^9},
+ CellLabel->"Out[98]=",ExpressionUUID->"a9dd6835-c572-471b-a1f7-d86dd141c8a0"]
+}, Open  ]]
+},
+WindowSize->{713.25, 654.},
+WindowMargins->{{Automatic, 291.75}, {Automatic, 55.5}},
+FrontEndVersion->"13.0 for Microsoft Windows (64-bit) (December 2, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"3b98f2a5-c145-4247-940b-b792addf5b17"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 789, 20, 86, "Input",ExpressionUUID->"16cc9fa5-1d40-43a6-ae99-0a8c04d01621"],
+Cell[1372, 44, 230, 3, 32, "Output",ExpressionUUID->"b53c2e7d-ac51-49ba-bdce-52450a0443c3"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1639, 52, 437, 9, 28, "Input",ExpressionUUID->"033cfa9f-1f36-4ed3-8f26-7d89915e8117"],
+Cell[2079, 63, 236, 3, 32, "Output",ExpressionUUID->"a9dd6835-c572-471b-a1f7-d86dd141c8a0"]
+}, Open  ]]
+}
+]
+*)
+
