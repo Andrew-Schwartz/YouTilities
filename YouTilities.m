@@ -20,3 +20,11 @@ Subscript[q, e]=Subscript["ElectronCharge", q];
 Subscript[m, e]=Subscript["ElectronMass", q];
 Subscript[\[Epsilon], 0]=Subscript["VacuumPermittivity", q];
 )
+
+
+CreateDirectory[FileNameJoin@{NotebookDirectory[],"figures"}];
+save[name_String,thing_,format_String:"pdf",dpi_Integer:500]:=Export[FileNameJoin@{NotebookDirectory[],"figures",name<>"."<>format},thing,ImageResolution->dpi]
+save[name_String,thing_,formats_List,dpi_Integer:500]:=Table[
+Export[FileNameJoin@{NotebookDirectory[],"figures",name<>"."<>format},thing,ImageResolution->dpi],
+{format,formats}
+]
