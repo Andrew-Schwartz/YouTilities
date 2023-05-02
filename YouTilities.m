@@ -7,10 +7,10 @@ UnitForm::usage="like UnitConvert but better";
 Subscript[s_String, q]:=Quantity[s]
 
 
-sideEffect[f_][x_]:=(f@x;x)
+also[f_][x_]:=(f@x;x)
 
 
-print[f_][x_]:=sideEffect[Print@*f][x]
+alsoPrint[f_][x_]:=also[Print@*f][x]
 
 
 loadConstants[]:=(
@@ -25,6 +25,7 @@ Subscript[\[Epsilon], 0]=Subscript["VacuumPermittivity", q];
 CreateDirectory[FileNameJoin@{NotebookDirectory[],"figures"}];
 save[name_String,thing_,format_String:"pdf",dpi_Integer:500]:=Export[FileNameJoin@{NotebookDirectory[],"figures",name<>"."<>format},thing,ImageResolution->dpi]
 save[name_String,thing_,formats_List,dpi_Integer:500]:=Table[
-Export[FileNameJoin@{NotebookDirectory[],"figures",name<>"."<>format},thing,ImageResolution->dpi],
-{format,formats}
+	save[name,thing,format,dpi],
+	{format,formats}
 ]
+alsoSave[name_String,format_String:"pdf",dpi_Integer:500][thing_]:=also[save[name,thing,format,dpi]]
