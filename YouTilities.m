@@ -28,4 +28,4 @@ save[name_String,thing_,formats_List,dpi_Integer:500]:=Table[
 	save[name,thing,format,dpi],
 	{format,formats}
 ]
-alsoSave[name_String,format_String:"pdf",dpi_Integer:500][thing_]:=also[save[name,thing,format,dpi]]
+alsoSave[name_String,format_String:"pdf",dpi_Integer:500]:=also[save[name,#,format,dpi]&]
