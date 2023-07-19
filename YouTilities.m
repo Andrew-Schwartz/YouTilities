@@ -34,3 +34,6 @@ save[fig_,name_String,format_String:"pdf",dpi_Integer:500]:=Export[FileNameJoin@
 save[fig_,name_String,formats_List,dpi_Integer:500]:=save[fig,name,#,dpi]&/@formats
 alsoSave[name_String,format_String:"pdf",dpi_Integer:500]:=also[save[#,name,format,dpi]&]
 alsoSave[name_String,formats_List,dpi_Integer:500]:=also[save[#,name,formats,dpi]&]
+
+
+defaultColorData[]:=ColorData[97]
