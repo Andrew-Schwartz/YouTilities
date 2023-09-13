@@ -13,13 +13,18 @@ also[f_][x_]:=(f@x;x)
 alsoPrint[f_:Identity]:=also[Print@*f]
 
 
-loadConstants[]:=(
-\[HBar]=Subscript["ReducedPlanckConstant", q];
-c=Subscript["SpeedOfLight", q];
-Subscript[q, e]=Subscript["ElectronCharge", q];
-Subscript[m, e]=Subscript["ElectronMass", q];
-Subscript[\[Epsilon], 0]=Subscript["VacuumPermittivity", q];
-)
+printThen[f_][x_]:=Module[]
+
+
+loadQuantites[\[HBar]]:=\[HBar]=Quantity["ReducedPlanckConstant"];
+loadQuantites[c]:=c=Quantity["SpeedOfLight"];
+loadQuantites[Subscript[q, e]]:=Subscript[q, e]=Quantity["ElectronCharge"];
+loadQuantites[Subscript[m, e]]:=Subscript[m, e]=Quantity["ElectronMass"];
+loadQuantites[Subscript[\[Epsilon], 0]]:=Subscript[\[Epsilon], 0]=Quantity["VacuumPermittivity"];
+loadQuantites[Subscript[\[Mu], 0]]:=Subscript[\[Mu], 0]=Quantity["VacuumPermeability"];
+SetAttributes[loadQuantites,Listable]
+(*loadQuantites[symbs__]:=(loadQuantites@#)&/@{symbs}*)
+loadQuantites[symbs__]:=loadQuantites[{symbs}]
 
 
 saveDirectory[]:=Module[
