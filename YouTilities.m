@@ -13,9 +13,6 @@ also[f_][x_]:=(f@x;x)
 alsoPrint[f_:Identity]:=also[Print@*f]
 
 
-printThen[f_][x_]:=Module[]
-
-
 ClearAll@loadQuantities;
 (* Makes loadQuantities idempotent, so loadQuantities[loadQuantities[\[HBar]]]==loadQuantities[\[HBar]] *)
 loadQuantities[q_Quantity]:=q;
@@ -36,6 +33,7 @@ loadQuantities[HoldPattern[f_[symbs__]]]:=f@@loadQuantities[{symbs}]
 (* Allow list of quantities to be loaded without surrounding in brackets *)
 loadQuantities[symbs__]:=loadQuantities[{symbs}]
 (* With no arguments, load all quantities *)
+(* todo figure out how to not have to hardcode the -5 (# of non-definition defs) *)
 loadQuantities[]:=(Keys[DownValues[loadQuantities]]/.loadQuantities->List)[[;;-5,1]]//Flatten//ReleaseHold//loadQuantities
 
 
@@ -47,7 +45,7 @@ saveDirectory[]:=Module[
 		dir
 	]
 ]
-save[fig_,name_String,format_String:"pdf",dpi_Integer:500]:=Export[FileNameJoin@{saveDirectory[],name<>"."<>format},thing,ImageResolution->dpi]
+save[fig_,name_String,format_String:"pdf",dpi_Integer:500]:=Export[FileNameJoin@{saveDirectory[],name<>"."<>format},fig,ImageResolution->dpi]
 save[fig_,name_String,formats_List,dpi_Integer:500]:=save[fig,name,#,dpi]&/@formats
 alsoSave[name_String,format_String:"pdf",dpi_Integer:500]:=also[save[#,name,format,dpi]&]
 alsoSave[name_String,formats_List,dpi_Integer:500]:=also[save[#,name,formats,dpi]&]
