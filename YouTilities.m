@@ -18,16 +18,25 @@ ClearAll@loadQuantities;
 loadQuantities[q_Quantity]:=q;
 (* Define constants that can be loaded *)
 loadQuantities[HoldPattern@\[HBar]]:=\[HBar]=Quantity["ReducedPlanckConstant"];
+loadQuantities[HoldPattern[h]]:=h=Quantity["PlanckConstant"];
 loadQuantities[HoldPattern@c]:=c=Quantity["SpeedOfLight"];
 loadQuantities[HoldPattern@Subscript[q, e]]:=Subscript[q, e]=Quantity["ElectronCharge"];
 loadQuantities[HoldPattern@Subscript[m, e]]:=Subscript[m, e]=Quantity["ElectronMass"];
+loadQuantities[HoldPattern@Subscript[m, p]]:=Subscript[m, p]=Quantity["ProtonMass"];
+loadQuantities[HoldPattern@Subscript[m, n]]:=Subscript[m, n]=Quantity["NeutronMass"];
 loadQuantities[HoldPattern@Subscript[\[Epsilon], 0]]:=Subscript[\[Epsilon], 0]=Quantity["VacuumPermittivity"];
 loadQuantities[HoldPattern@Subscript[\[Mu], 0]]:=Subscript[\[Mu], 0]=Quantity["VacuumPermeability"];
+loadQuantities[HoldPattern@Subscript[a, 0]]:=Subscript[a, 0]=Quantity["BohrRadius"];
+loadQuantities[HoldPattern@G]:=G=Quantity["GravitationalConstant"];
+loadQuantities[HoldPattern@Subscript[N, A]]:=Subscript[N, A]=Quantity["AvogadroConstant"];
+loadQuantities[HoldPattern@Subscript[k, B]]:=Subscript[k, B]=Quantity["BoltzmannConstant"];
 (* Allow list of quantities to be loaded  *)
 SetAttributes[loadQuantities,Listable]
-(* Handle other symbols not defined above, and return 0 *)
+(*(* Handle other symbols not defined above, and return 0 *)
 loadQuantities::unknownSymb="Unknown symbol `1`";
-loadQuantities[symb_]:=(Message[loadQuantities::unknownSymb,symb];0);
+loadQuantities[symb_]:=(Message[loadQuantities::unknownSymb,symb];symb);*)
+(* Return unknown symbols unchanged *)
+loadQuantities[symb_]:=symb;
 (* Load product, sum, etc of constants at once *)
 loadQuantities[HoldPattern[f_[symbs__]]]:=f@@loadQuantities[{symbs}]
 (* Allow list of quantities to be loaded without surrounding in brackets *)
