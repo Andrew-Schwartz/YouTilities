@@ -24,6 +24,8 @@ loadQuantities[HoldPattern@Subscript[q, e]]:=Subscript[q, e]=Quantity["ElectronC
 loadQuantities[HoldPattern@Subscript[m, e]]:=Subscript[m, e]=Quantity["ElectronMass"];
 loadQuantities[HoldPattern@Subscript[m, p]]:=Subscript[m, p]=Quantity["ProtonMass"];
 loadQuantities[HoldPattern@Subscript[m, n]]:=Subscript[m, n]=Quantity["NeutronMass"];
+loadQuantities[HoldPattern@Subscript[m, \[Mu]]]:=Subscript[m, \[Mu]]=Quantity["MuonMass"];
+loadQuantities[HoldPattern@Subscript[m, \[Tau]]]:=Subscript[m, \[Tau]]=Quantity["TauMass"];
 loadQuantities[HoldPattern@Subscript[\[Epsilon], 0]]:=Subscript[\[Epsilon], 0]=Quantity["VacuumPermittivity"];
 loadQuantities[HoldPattern@Subscript[\[Mu], 0]]:=Subscript[\[Mu], 0]=Quantity["VacuumPermeability"];
 loadQuantities[HoldPattern@Subscript[a, 0]]:=Subscript[a, 0]=Quantity["BohrRadius"];
@@ -61,3 +63,36 @@ alsoSave[name_String,formats_List,dpi_Integer:500]:=also[save[#,name,formats,dpi
 
 
 defaultColorData[]:=ColorData[97]
+
+
+ClearAll@eigenStuff
+eigenStuff::zeroEigenvectors="Some zero-eigenvectors";
+eigenStuff::unequal="#vals!=#vecs";
+eigenStuff[matrix_,opts:OptionsPattern[{ai\[Lambda]->False,rref->False}]]:=Module[
+	{
+		ai\[Lambda]=OptionValue@ai\[Lambda],
+		rref=OptionValue@rref,
+		len=Length@matrix,
+		vecs,vals
+	},
+	{vals,vecs}=Eigensystem[matrix];
+	If[ContainsAny[vecs,{Table[0,len]}],
+		Throw[Message[eigenStuff::zeroEigenvectors]]
+	];
+	AI\[Lambda]=matrix-# IdentityMatrix@len&/@vals;
+	If[Length/@{vals,vecs}/.List->Equal,
+		Grid[
+			Join[
+				{{"\[Lambda]",If[ai\[Lambda],"A-I\[Lambda]",Nothing],If[rref,"RREF",Nothing],"Eigenvector"}},
+				{
+					vals,
+					If[ai\[Lambda],MatrixForm/@AI\[Lambda],Nothing],
+					If[rref,MatrixForm@*RowReduce/@AI\[Lambda],Nothing],
+					MatrixForm/@vecs
+				}\[Transpose]
+			],
+			Frame->All
+		],
+		Message[eigenStuff::unequal]
+	]
+]
