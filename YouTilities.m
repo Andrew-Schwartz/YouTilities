@@ -49,10 +49,10 @@ loadQuantities[]:=(Keys[DownValues[loadQuantities]]/.loadQuantities->List)[[;;-5
 
 
 saveDirectory[]:=Module[
-	{dir=FileNameJoin@{NotebookDirectory[],"figures"}},
+	{dir=FileNameJoin@{NotebookDirectory[],"mathematica_figures"}},
 	If[
 		!DirectoryQ@dir,
-		CreateDirectory[FileNameJoin@{NotebookDirectory[],"figures"}],
+		CreateDirectory[FileNameJoin@{NotebookDirectory[],"mathematica_figures"}],
 		dir
 	]
 ]
@@ -63,6 +63,7 @@ alsoSave[name_String,formats_List,dpi_Integer:500]:=also[save[#,name,formats,dpi
 
 
 defaultColorData[]:=ColorData[97]
+defaultColorData[n_Integer]:=defaultColorData[][n]
 
 
 ClearAll@eigenStuff
