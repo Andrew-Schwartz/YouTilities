@@ -131,7 +131,7 @@ insertGradient[name_,colors_]:=(
 	];
 )
 Module[{data,names,colors},
-	data=Import[NotebookDirectory[]<>"flags.tsv","TSV","Numeric"->False];
+	data=Import["https://raw.githubusercontent.com/Andrew-Schwartz/YouTilities/master/flags.tsv","TSV","Numeric"->False];
 	names=#<>"Flag"&/@data[[;;,1]];
 	colors=Map[RGBColor["#"<>#]&,data[[;;,2;;]],{2}];
 	
