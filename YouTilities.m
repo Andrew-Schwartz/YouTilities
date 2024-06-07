@@ -14,6 +14,7 @@ alsoPrint[f_:Identity]:=also[Print@*f]
 
 
 ClearAll@loadQuantities;
+quantityAssoc[HoldPattern@symb]:=<|\[HBar]->Quantity["ReducedPlanckConstant"]|>[symb]
 (* Makes loadQuantities idempotent, so loadQuantities[loadQuantities[\[HBar]]]==loadQuantities[\[HBar]] *)
 loadQuantities[q_Quantity]:=q;
 (* Define constants that can be loaded *)
@@ -96,4 +97,43 @@ eigenStuff[matrix_,opts:OptionsPattern[{ai\[Lambda]->False,rref->False}]]:=Modul
 		],
 		Message[eigenStuff::unequal]
 	]
+]
+
+
+ClearAll[enumerate]
+enumerate=MapIndexed[{#2[[1]],#1}&];
+
+
+(* FullSimplifty + ComplexExpand (to get rid of "Conjugate"s) *)
+(* From melt *)
+Clear[cf];
+(*cf[expr_]:=FullSimplify@ComplexExpand@expr;*)
+cf[expr_]:=FullSimplify[ComplexExpand@Normal@expr,Thread[DeleteDuplicates@Cases[Normal@expr,_Symbol,\[Infinity]]>0]]
+
+cf[expr_,assumps_]:=FullSimplify[ComplexExpand@Normal@expr,assumps]
+cf::usage = "FullSimplify assuming that all symbols are real and positive.";
+
+
+(* Pride Flags! *)
+(* How to add gradients: https://mathematica.stackexchange.com/questions/57885/is-it-possible-to-insert-new-colour-schemes-into-colordata/57893#57893 *)
+(* Flag rgb colors: https://www.flagcolorcodes.com/flags/pride *)
+
+ColorData[1];
+(* Export this function so users can add gradients as needed *)
+insertGradient[name_,colors_]:=(
+	AppendTo[
+		DataPaclets`ColorDataDump`colorSchemes,
+		{{name,"",{}},{"Gradients"},1,{0,1},colors,""}
+	];
+	AppendTo[
+		DataPaclets`ColorDataDump`colorSchemeNames,
+		name
+	];
+)
+Module[{data,names,colors},
+	data=Import[NotebookDirectory[]<>"flags.tsv","TSV","Numeric"->False];
+	names=#<>"Flag"&/@data[[;;,1]];
+	colors=Map[RGBColor["#"<>#]&,data[[;;,2;;]],{2}];
+	
+	insertGradient@@#&/@Transpose@{names,colors};
 ]
