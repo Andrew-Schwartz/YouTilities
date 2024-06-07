@@ -63,6 +63,9 @@ alsoSave[name_String,format_String:"pdf",dpi_Integer:500]:=also[save[#,name,form
 alsoSave[name_String,formats_List,dpi_Integer:500]:=also[save[#,name,formats,dpi]&]
 
 
+alsoCopy=also[CopyToClipboard@Rasterize[#]&];
+
+
 defaultColorData[]:=ColorData[97]
 defaultColorData[n_Integer]:=defaultColorData[][n]
 
