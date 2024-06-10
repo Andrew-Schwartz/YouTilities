@@ -8,7 +8,7 @@ Subscript[s_String, q]:=Quantity[s]
 
 
 (* Exponentiate with something other than Times (useful for matrix powers with Dot) *)
-Subscript/:Power[Subscript[mat_,op_],n_Integer]:=op@@Table[mat,n]
+Subscript/:Power[Subscript[mat_,Dot],n_Integer]:=Dot@@Table[mat,n]
 
 
 also[f_][x_]:=(f@x;x)
