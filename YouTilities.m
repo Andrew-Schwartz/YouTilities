@@ -144,3 +144,17 @@ Module[{data,names,colors},
 	
 	insertGradient@@#&/@Transpose@{names,colors};
 ]
+
+
+(* https://mathematica.stackexchange.com/a/154287 *)
+SparseReplaceAll[s_SparseArray,rule_]:=With[{
+		elems=ReplaceAll[s["NonzeroValues"],rule],
+		default=ReplaceAll[s["Background"],rule]
+	},
+	SparseArray[
+		Automatic,
+		s["Dimensions"],
+		default,
+		{1,{s["RowPointers"],s["ColumnIndices"]},elems}
+	]
+]
