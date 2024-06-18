@@ -106,7 +106,7 @@ insertGradient[name_,gradColors_]:=If[
 			DataPaclets`ColorDataDump`colorSchemeNames,
 			name
 		];
-	),
+	)
 ]
 Module[{data,names,colors},
 	data=Import["https://raw.githubusercontent.com/Andrew-Schwartz/YouTilities/master/flags.tsv","TSV","Numeric"->False];
@@ -180,6 +180,4 @@ SparseReplaceAll[s_SparseArray,rule_]:=With[{
 		{1,{s["RowPointers"],s["ColumnIndices"]},elems}
 	]
 ]
-
-
 
