@@ -85,6 +85,11 @@ alsoSave[name_String,formats_List,dpi_Integer:500]:=also[save[#,name,formats,dpi
 alsoCopy=also[CopyToClipboard@Rasterize[#]&];
 
 
+tableHeaded[headers_][list_]:=TableForm[list,TableHeadings->headers]
+tableHeadedRows[rows_][list_]:=TableForm[list,TableHeadings->{rows,None}]
+tableHeadedCols[cols_][list_]:=TableForm[list,TableHeadings->{None,cols}]
+
+
 defaultColorData[]:=ColorData[97]
 defaultColorData[n_Integer]:=defaultColorData[][n]
 
@@ -180,4 +185,6 @@ SparseReplaceAll[s_SparseArray,rule_]:=With[{
 		{1,{s["RowPointers"],s["ColumnIndices"]},elems}
 	]
 ]
+
+
 
