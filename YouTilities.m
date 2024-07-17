@@ -129,18 +129,21 @@ Subscript/:Power[Subscript[mat_,Dot],n_Integer]:=Dot@@Table[mat,n]
 ClearAll@eigenStuff
 eigenStuff::zeroEigenvectors="Some zero-eigenvectors";
 eigenStuff::unequal="#vals!=#vecs";
-eigenStuff[matrix_,opts:OptionsPattern[{ai\[Lambda]->False,rref->False}]]:=Module[
+eigenStuff[matrix_,opts:OptionsPattern[{sys->Eigensystem,ai\[Lambda]->False,rref->False,normalize->False}]]:=Module[
 	{
 		ai\[Lambda]=OptionValue@ai\[Lambda],
 		rref=OptionValue@rref,
+		normalize=OptionValue@normalize,
+		sys=OptionValue@sys,
 		len=Length@matrix,
 		vecs,vals
 	},
-	{vals,vecs}=Eigensystem[matrix];
+	{vals,vecs}=sys[matrix];
+	vecs=If[normalize,Normalize/@vecs,vecs];
 	If[ContainsAny[vecs,{Table[0,len]}],
 		Throw[Message[eigenStuff::zeroEigenvectors]]
 	];
-	AI\[Lambda]=matrix-# IdentityMatrix@len&/@vals;
+	AI\[Lambda]=matrix-# IdentityMatrix@len&/@vals//Simplify;
 	If[Length/@{vals,vecs}/.List->Equal,
 		Grid[
 			Join[
