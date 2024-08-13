@@ -190,4 +190,8 @@ SparseReplaceAll[s_SparseArray,rule_]:=With[{
 ]
 
 
+ClearAll[fMap]
+anyValue_[fMap[innerFunction_]]^:=innerFunction[anyValue]
+
+
 
