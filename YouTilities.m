@@ -82,7 +82,8 @@ alsoSave[name_String,format_String:"pdf",dpi_Integer:500]:=also[save[#,name,form
 alsoSave[name_String,formats_List,dpi_Integer:500]:=also[save[#,name,formats,dpi]&]
 
 
-alsoCopy=also[CopyToClipboard@Rasterize[#]&];
+alsoCopyOpts[opts___]:=also[CopyToClipboard@Rasterize[#,opts]&];
+alsoCopy=alsoCopyOpts[]
 
 
 tableHeaded[headers_][list_]:=TableForm[list,TableHeadings->headers]
@@ -119,6 +120,16 @@ Module[{data,names,colors},
 	colors=Map[RGBColor["#"<>#]&,data[[;;,2;;]],{2}];
 	
 	insertGradient@@#&/@Transpose@{names,colors};
+]
+
+
+(* ::Input::Initialization:: *)
+EigvecsT[A_,neigs_:"all",\[CapitalDelta]_:10^5]:=Transpose@Eigvecs[A,neigs,\[CapitalDelta]]
+
+EigsysT[A_,neigs_:"all",\[CapitalDelta]_:10^5]:=Module[
+{vals,vecs},
+{vals,vecs}=Eigsys[A,neigs,\[CapitalDelta]];
+{vals,Transpose@vecs}
 ]
 
 
