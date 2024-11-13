@@ -23,6 +23,12 @@ UnitForm[units_][quantity_]:=UnitConvert[quantity,units]
 UnitForm::usage="like UnitConvert but for postfix";
 
 
+(* ::Input::Initialization:: *)
+(* Make it so you can always UnitForm 0 into any units *)
+(*UnitConvert[zero_?(#==0&),targetunit_]^:=Quantity[0,targetunit]*)
+(*UnitConvert[0.,targetunit_]^:=Quantity[0,targetunit]*)
+
+
 Subscript[s_String, q]:=Quantity[s]
 
 
@@ -125,12 +131,7 @@ Module[{data,names,colors},
 
 (* ::Input::Initialization:: *)
 EigvecsT[A_,neigs_:"all",\[CapitalDelta]_:10^5]:=Transpose@Eigvecs[A,neigs,\[CapitalDelta]]
-
-EigsysT[A_,neigs_:"all",\[CapitalDelta]_:10^5]:=Module[
-{vals,vecs},
-{vals,vecs}=Eigsys[A,neigs,\[CapitalDelta]];
-{vals,Transpose@vecs}
-]
+EigsysT[A_,neigs_:"all",\[CapitalDelta]_:10^5]:=MapThread[#1@#2&,{{Identity,Transpose},Eigsys@A}]
 
 
 (* Exponentiate with something other than Times (useful for matrix powers with Dot) *)
@@ -177,16 +178,6 @@ ClearAll[enumerate]
 enumerate=MapIndexed[{#2[[1]],#1}&];
 
 
-(* FullSimplifty + ComplexExpand (to get rid of "Conjugate"s) *)
-(* From melt *)
-Clear[cf];
-(*cf[expr_]:=FullSimplify@ComplexExpand@expr;*)
-cf[expr_]:=FullSimplify[ComplexExpand@Normal@expr,Thread[DeleteDuplicates@Cases[Normal@expr,_Symbol,\[Infinity]]>0]]
-
-cf[expr_,assumps_]:=FullSimplify[ComplexExpand@Normal@expr,assumps]
-cf::usage = "FullSimplify assuming that all symbols are real and positive.";
-
-
 (* https://mathematica.stackexchange.com/a/154287 *)
 SparseReplaceAll[s_SparseArray,rule_]:=With[{
 		elems=ReplaceAll[s["NonzeroValues"],rule],
@@ -205,4 +196,4 @@ ClearAll[fMap]
 anyValue_[fMap[innerFunction_]]^:=innerFunction[anyValue]
 
 
-
+Charting$InteractiveHighlighting=False;
